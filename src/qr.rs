@@ -33,7 +33,7 @@ pub async fn qr_post(qr_form: web::Form<QRForm>) -> Result<HttpResponse> {
     let (width, height) = image.dimensions();
     let mut png: Vec<u8> = vec!();
     let png_encoder = image::png::PngEncoder::new(&mut png);
-    png_encoder.write_image(image.as_ref(), width, height, image::ColorType::L8);
+    png_encoder.write_image(image.as_ref(), width, height, ColorType::L8).unwrap();
     let png_base64 = base64::encode(png);
     Ok(HttpResponse::Ok().content_type("text/html").body(
         (QR { base64_png_code: Some(png_base64) }).render().unwrap()
