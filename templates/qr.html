@@ -3,14 +3,29 @@
 {% block title %}Código QR{% endblock %}
 
 {% block content %}
-<h1>Generar código QR</h1>
-<p>
-<h3>Ingrese los datos del Wi-Fi</h3>
-<form method="post">
-    <label for="ssid">SSID:</label><br>
-    <input type="text" id="ssid" name="ssid" /><br>
-    <label for="pass">Contraseña:</label><br>
-    <input type="password" id="pass" name="pass" /><br>
-    <input type="submit" value="Generar">
-</form>
+{% match base64_png_code %}
+    {% when Some with (code) %}
+        <p>
+        <h4>Acerque la camara de la IntraCam para configurar el Wi-Fi</h4>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column">
+                <img src="data:image/png;base64,{{code}}" alt="QR code" />
+                <br>
+                <a href="">Regresar</a>
+            </div>
+            <div class="column"></div>
+        </div>
+    {% when _ %}
+        <h1>Generar código QR</h1>
+        <p>
+        <h3>Ingrese los datos del Wi-Fi</h3>
+        <form method="post">
+            <label for="ssid">SSID:</label><br>
+            <input type="text" id="ssid" name="ssid" /><br>
+            <label for="pass">Contraseña:</label><br>
+            <input type="password" id="pass" name="pass" /><br>
+            <input type="submit" value="Generar">
+        </form>
+{% endmatch %}
 {% endblock %}
