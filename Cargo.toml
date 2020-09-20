@@ -1,0 +1,20 @@
+[package]
+name = "intracam-web"
+version = "0.1.0"
+authors = ["Ernesto Menéndez <pyalec@gmail.com>"]
+edition = "2018"
+build = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "3"
+actix-web-static-files = "3.0"
+askama = "0.10"
+log = "0.4"
+env_logger = "0.7"
+serde = "1.0"
+
+[build-dependencies]
+actix-web-static-files = "3.0"
+askama = "0.10"
