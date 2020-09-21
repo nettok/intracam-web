@@ -19,14 +19,14 @@ pub struct QRForm {
 }
 
 #[get("/qr")]
-pub async fn qr() -> Result<HttpResponse> {
+pub async fn qr_form_page() -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().content_type("text/html").body(
         (QR { base64_png_code: None }).render().unwrap()
     ))
 }
 
 #[post("/qr")]
-pub async fn qr_post(qr_form: web::Form<QRForm>) -> Result<HttpResponse> {
+pub async fn qr_generate(qr_form: web::Form<QRForm>) -> Result<HttpResponse> {
     let data: Vec<u8> = format!("{},{}", qr_form.ssid, qr_form.pass).into_bytes();
     let code = QrCode::new(data).unwrap();
     let image = code.render::<Luma<u8>>().build();

@@ -1043,6 +1043,7 @@ dependencies = [
  "askama",
  "base64",
  "env_logger",
+ "futures",
  "image",
  "log",
  "qrcode",

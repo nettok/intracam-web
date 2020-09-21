@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Fotos{% endblock %}
+
+{% block content %}
+<h1>IntraCam</h1>
+<ul>
+    {% for photo in base64_photos %}
+    <li><img src="data:image/png;base64,{{photo}}" alt="photo" /></li>
+    {% endfor %}
+</ul>
+{% endblock %}
