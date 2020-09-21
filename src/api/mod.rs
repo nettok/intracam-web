@@ -1,6 +1,6 @@
 use crate::app_state::AppState;
 
-use actix_web::{get, post, web, Error, HttpResponse , Responder, Result};
+use actix_web::{post, web, Error, HttpResponse , Responder, Result};
 use futures::StreamExt;
 
 pub fn api_config(cfg: &mut web::ServiceConfig) {
@@ -10,7 +10,7 @@ pub fn api_config(cfg: &mut web::ServiceConfig) {
     ;
 }
 
-#[get("/ping")]
+#[post("/ping")]
 async fn ping() -> impl Responder {
     HttpResponse::Ok().body("pong")
 }
