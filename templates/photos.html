@@ -3,10 +3,25 @@
 {% block title %}Fotos{% endblock %}
 
 {% block content %}
-<h1>IntraCam</h1>
-<ul>
-    {% for photo in base64_photos %}
-    <li><img src="data:image/png;base64,{{photo}}" alt="photo" /></li>
+<h1>Fotos</h1>
+{% if photos.len() == 0 %}
+    Aún no hay fotos.
+{% else %}
+<table>
+    <thead>
+    <tr>
+        <th>Foto</th>
+        <th>Tiempo</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for photo in photos %}
+        <tr>
+            <td><img src="data:image/jpg;base64,{{photo.base64_image}}" alt="photo" /></td>
+            <td>{{photo.timestamp}}</td>
+        </tr>
     {% endfor %}
-</ul>
+    </tbody>
+</table>
+{% endif %}
 {% endblock %}

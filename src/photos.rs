@@ -7,18 +7,29 @@ use base64;
 #[derive(Template)]
 #[template(path = "photos.html")]
 struct Photos {
-    base64_photos: Vec<String>
+    photos: Vec<Photo>
 }
+
+struct Photo {
+    base64_image: String,
+    timestamp: String,
+}
+
 
 #[get("/photos")]
 pub async fn photos(app_state: web::Data<AppState>) -> Result<HttpResponse> {
     let photos = app_state.photos.lock().unwrap();
 
-    let base64_photos = photos.iter()
-        .map(|photo| base64::encode(photo))
+    let photos = photos.iter()
+        .map(|photo| {
+            Photo {
+                base64_image: base64::encode(&photo.image),
+                timestamp: photo.timestamp.to_string()
+            }
+        })
         .collect();
 
     Ok(HttpResponse::Ok().content_type("text/html").body(
-        (Photos { base64_photos }).render().unwrap()
+        (Photos { photos }).render().unwrap()
     ))
 }

@@ -1,6 +1,7 @@
-use crate::app_state::AppState;
+use crate::app_state::{AppState, Photo};
 
 use actix_web::{post, web, Error, HttpResponse , Responder, Result};
+use chrono::Utc;
 use futures::StreamExt;
 
 pub fn api_config(cfg: &mut web::ServiceConfig) {
@@ -25,7 +26,11 @@ async fn photo_upload(app_state: web::Data<AppState>, mut body: web::Payload) ->
     }
 
     let mut photos = app_state.photos.lock().unwrap();
-    photos.insert(0, bytes.freeze());
+    let photo = Photo {
+        image: bytes.freeze(),
+        timestamp: Utc::now(),
+    };
+    photos.insert(0, photo);
     photos.truncate(12);
 
     Ok(HttpResponse::Created().finish())
